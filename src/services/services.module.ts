@@ -12,7 +12,8 @@ import { NonceService } from './nonce/nonce.service';
     UserService,
     JwtService,
     NonceService,
+    SignatureService
   ],
-  exports: [PrismaService, JuryService, UserService, NonceService],
+  exports: [PrismaService, JuryService, UserService, NonceService, SignatureService],
 })
 export class ServicesModule {}
