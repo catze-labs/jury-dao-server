@@ -16,16 +16,4 @@ export class CreateJuryDto {
 
   @IsInt()
   readonly defendantId;
-
-  @IsString()
-  @IsOptional()
-  readonly defendantTitle;
-
-  @IsString()
-  @IsOptional()
-  readonly defendantContent;
-
-  @IsArray()
-  @IsOptional()
-  readonly defendantReferenceLink;
 }

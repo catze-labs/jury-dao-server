@@ -1,4 +1,13 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateJuryDto } from './createJury.dto';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 
-export class PatchJuryDto extends PartialType(CreateJuryDto) {}
+export class PatchJuryDto {
+  @IsString()
+  readonly defendantTitle;
+
+  @IsString()
+  readonly defendantContent;
+
+  @IsArray()
+  @IsOptional()
+  readonly defendantReferenceLink;
+}
