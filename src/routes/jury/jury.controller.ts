@@ -13,7 +13,7 @@ import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 
 @Controller('juries')
 @ApiTags('Jury')
-export class UserController {
+export class JuryController {
   constructor(private readonly userService: UserService) {}
 
   @UseGuards(JwtAuthGuard)
