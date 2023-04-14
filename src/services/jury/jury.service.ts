@@ -48,7 +48,7 @@ export class JuryService {
   }
 
   public async getJury(juryId: number) {
-    return await this.getJuryOrThrow(juryId);
+    return this.getJuryOrThrow(juryId);
   }
 
   public async patchJury(juryId: number, patchJuryDto: PatchJuryDto) {
@@ -119,8 +119,9 @@ export class JuryService {
         id: juryId,
       },
     });
-
+    console.log('Jury found');
     if (jury == null) {
+      console.log('Jury not found');
       throw new NotFoundException({ message: 'Jury not found' });
     }
 

@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
@@ -46,7 +47,7 @@ export class JuryController {
   }
 
   @Get(':juryId')
-  async getJury(@Param('juryId') juryId: number) {
+  async getJury(@Param('juryId', ParseIntPipe) juryId: number) {
     return this.juryService.getJury(juryId);
   }
 
@@ -64,7 +65,7 @@ export class JuryController {
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/votes')
   async createVote(
-    @Param('juryId') juryId: number,
+    @Param('juryId', ParseIntPipe) juryId: number,
     @Body() createVoteDto: CreateVoteDto,
     @Body() signatureDto: SignatureDto,
   ) {
@@ -79,14 +80,14 @@ export class JuryController {
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/comments')
   async createComment(
-    @Param('juryId') juryId: number,
+    @Param('juryId', ParseIntPipe) juryId: number,
     @Body() createCommentDto: CreateCommentDto,
   ) {
     return this.juryService.createComment(juryId, createCommentDto);
   }
 
   @Get(':juryId/comments')
-  async getComments(@Param('juryId') juryId: number) {
+  async getComments(@Param('juryId', ParseIntPipe) juryId: number) {
     return this.juryService.getComments(juryId);
   }
 
@@ -94,8 +95,8 @@ export class JuryController {
   @UseGuards(JwtAuthGuard)
   @Delete(':juryId/comments/:commentId')
   async deleteComment(
-    @Param('juryId') juryId: number,
-    @Param('commentId') commentId: number,
+    @Param('juryId', ParseIntPipe) juryId: number,
+    @Param('commentId', ParseIntPipe) commentId: number,
   ) {
     const userId = 1;
 

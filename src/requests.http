@@ -1,0 +1,71 @@
+### Health
+GET http://localhost:8010/
+
+### Auth(Login)
+POST http://localhost:8010/auth
+Content-Type: application/json
+
+{
+  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
+}
+
+
+### Create a jury
+GET http://localhost:8010/juries
+Content-Type: application/json
+
+{
+  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
+}
+
+
+### Get juries
+GET http://localhost:8010/juries
+
+### Get a jury
+GET http://localhost:8010/juries/1
+
+### Add defense
+PATCH http://localhost:8010/juries/1
+Content-Type: application/json
+
+{
+  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
+}
+
+
+### Add a vote
+POST http://localhost:8010/juries/1/votes
+Content-Type: application/json
+
+{
+  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
+}
+
+
+### Add a comment
+POST http://localhost:8010/juries/1/comments
+Content-Type: application/json
+
+{
+  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
+}
+
+
+### Get comments
+GET http://localhost:8010/juries/1/comments
+
+### Delte a comment
+GET http://localhost:8010/juries/1/comments
+
+### Sign up
+POST http://localhost:8010/users
+
+### Get profile
+GET http://localhost:8010/profile
+
+### Get user
+GET http://localhost:8010/users/0x512ADC0aB9B79dc842e19e91547da8dF874F5682
+
+### Nonce
+POST http://localhost:8010/nonce
