@@ -11,26 +11,36 @@ datasource db {
 }
 
 model user {
-  id            Int       @id @default(autoincrement())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  walletAddress String    @unique
-  name          String
-  email         String?
-  twitterHandle String?
-  jury          jury[]
-  vote          vote[]
-  comment       comment[]
+  id                Int       @id @default(autoincrement())
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  walletAddress     String    @unique
+  name              String
+  email             String?
+  twitterHandle     String?
+  vote              vote[]
+  comment           comment[]
+  juriesAsPlantiff  jury[]    @relation("juriesAsPlantiff")
+  juriesAsDefendant jury[]    @relation("juriesAsDefendant")
 }
 
 model jury {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  userId    Int
-  user      user      @relation(fields: [userId], references: [id])
-  vote      vote[]
-  comment   comment[]
+  id                     Int      @id @default(autoincrement())
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  plaintiffId            Int
+  plaintiff              user     @relation("juriesAsPlantiff", fields: [plaintiffId], references: [id])
+  plaintiffTitle         String
+  plaintiffContent       String
+  plaintiffReferenceLink Json?
+  defendantID            Int
+  defendant              user     @relation("juriesAsDefendant", fields: [defendantID], references: [id])
+  defendantTitle         String
+  defendantContent       String
+  defendantReferenceLink Json?
+
+  vote    vote[]
+  comment comment[]
 }
 
 model vote {
