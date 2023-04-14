@@ -35,8 +35,8 @@ model jury {
   plaintiffReferenceLink Json?
   defendantID            Int
   defendant              user     @relation("juriesAsDefendant", fields: [defendantID], references: [id])
-  defendantTitle         String
-  defendantContent       String
+  defendantTitle         String?
+  defendantContent       String?
   defendantReferenceLink Json?
 
   vote    vote[]
