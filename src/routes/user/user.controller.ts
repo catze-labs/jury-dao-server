@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Request, UseGuards ,Body, Param} from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UserService } from '../../services/user/user.service';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { RegisterUserDto } from '../dtos/registerUser.dto';
@@ -17,12 +17,14 @@ export class UserController {
     return await this.userService.register(walletAddress, name, email, twitterHandle);
   }
 
+  @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async getProfile(@Request() req: any) {
     return req.user;
   }
 
+  @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Get('users/:walletAddress')
   async getUser(@Param('walletAddress') walletAddress : string) {

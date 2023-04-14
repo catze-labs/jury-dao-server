@@ -17,6 +17,7 @@ async function bootstrap() {
       .setTitle('Jury DAO API DOCS')
       .setDescription('Jury DAO API DOCS')
       .setVersion('0.1')
+      .addBearerAuth({type : 'http', scheme : 'bearer', name : 'JWT', in : 'header'}, 'accessToken')
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);
