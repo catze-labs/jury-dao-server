@@ -121,7 +121,7 @@ export class JuryService {
     });
 
     if (jury == null) {
-      throw new Error('Jury not found');
+      throw new NotFoundException({ message: 'Jury not found' });
     }
 
     return jury;
