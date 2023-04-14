@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -10,6 +11,9 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { JuryService } from '../../services/jury/jury.service';
+import { CreateJuryDto } from '../dtos/createJury.dto';
+import { CreateVoteDto } from '../dtos/createVote.dto';
+import { CreateCommentDto } from '../dtos/createComment.dto';
 
 @Controller('juries')
 @ApiTags('Jury')
@@ -18,8 +22,8 @@ export class JuryController {
 
   @UseGuards(JwtAuthGuard)
   @Post('')
-  async create() {
-    return this.juryService.create();
+  async create(@Body() createJuryDto: CreateJuryDto) {
+    return this.juryService.create(createJuryDto);
   }
 
   @Get('')
@@ -40,19 +44,25 @@ export class JuryController {
 
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/votes')
-  async createVote(@Param('juryId') juryId: number) {
-    return this.juryService.createVote(juryId);
+  async createVote(
+    @Param('juryId') juryId: number,
+    @Body() createVoteDto: CreateVoteDto,
+  ) {
+    return this.juryService.createVote(juryId, createVoteDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/comments')
-  async createComment(@Param('juryId') juryId: number) {
-    return this.juryService.createComment(juryId);
+  async createComment(
+    @Param('juryId') juryId: number,
+    @Body() createCommentDto: CreateCommentDto,
+  ) {
+    return this.juryService.createComment(juryId, createCommentDto);
   }
 
   @Get(':juryId/comments')
   async getComments(@Param('juryId') juryId: number) {
-    return this.juryService.getComments();
+    return this.juryService.getComments(juryId);
   }
 
   @UseGuards(JwtAuthGuard)
