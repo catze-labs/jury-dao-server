@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 
@@ -15,15 +19,15 @@ export class UserService {
     email?: string,
     twitterHandle?: string,
   ) {
-    const user = await this.prismaService.user.findUnique({
+    const user = await this.prismaService.user.count({
       where: {
         walletAddress,
       },
     });
 
     if (user) {
-      throw new NotFoundException({
-        message: 'User not found',
+      throw new ConflictException({
+        message: 'Already the same wallet address exists',
       });
     }
 
