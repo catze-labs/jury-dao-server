@@ -1,14 +1,13 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-
+import {UserService} from 'src/services/user/user.service';
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
-  constructor() {}
+  constructor(private readonly userService : UserService) {}
 
   @Post('/login')
-  async login(@Body('email') email: string) {
-    // TODO add JWT login logic
-    return true;
+  async login(@Body('walletAddress') walletAddress: string) {
+	  return await this.userService.login(walletAddress)
   }
 }
