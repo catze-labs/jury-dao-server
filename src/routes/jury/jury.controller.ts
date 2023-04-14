@@ -15,15 +15,28 @@ import { CreateJuryDto } from '../dtos/createJury.dto';
 import { CreateVoteDto } from '../dtos/createVote.dto';
 import { CreateCommentDto } from '../dtos/createComment.dto';
 import { PatchJuryDto } from '../dtos/patchJury.dto';
+import { SignatureService } from '../../services/signature/signature.service';
+import { SignatureDto } from '../dtos/signature.dto';
 
 @Controller('juries')
 @ApiTags('Jury')
 export class JuryController {
-  constructor(private readonly juryService: JuryService) {}
+  constructor(
+    private readonly juryService: JuryService,
+    private readonly signatureService: SignatureService,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Post('')
-  async create(@Body() createJuryDto: CreateJuryDto) {
+  async createJury(
+    @Body() createJuryDto: CreateJuryDto,
+    @Body() signatureDto: SignatureDto,
+  ) {
+    const { walletAddress, signature } = signatureDto;
+    const userAddress: string | undefined =
+      await this.signatureService.getAddress(walletAddress, signature);
+    this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
+
     return this.juryService.create(createJuryDto);
   }
 
@@ -53,7 +66,12 @@ export class JuryController {
   async createVote(
     @Param('juryId') juryId: number,
     @Body() createVoteDto: CreateVoteDto,
+    @Body() signatureDto: SignatureDto,
   ) {
+    const { walletAddress, signature } = signatureDto;
+    const userAddress: string | undefined =
+      await this.signatureService.getAddress(walletAddress, signature);
+    this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
     return this.juryService.createVote(juryId, createVoteDto);
   }
 
