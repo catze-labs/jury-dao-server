@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma/prisma.service';
 import { CreateJuryDto } from '../../routes/dtos/createJury.dto';
 import { Prisma } from '@prisma/client';
@@ -92,10 +96,14 @@ export class JuryService {
     });
 
     if (comment == null) {
-      throw new Error('Comment not found');
+      throw new NotFoundException({
+        message: 'Comment not found',
+      });
     } else {
       if (comment.userId !== userId) {
-        throw new Error('You are not the owner of this comment');
+        throw new ForbiddenException({
+          message: 'You are not the owner of this comment',
+        });
       }
       await this.ps.comment.delete({
         where: {
