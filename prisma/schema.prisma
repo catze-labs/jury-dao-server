@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  walletAddress String    @unique
+  name          String
+  email         String?   @unique
+  twitterHandle String?
+  jury          jury[]
+  vote          vote[]
+  comment       comment[]
+}
+
+model jury {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  userId    Int
+  user      user      @relation(fields: [userId], references: [id])
+  vote      vote[]
+  comment   comment[]
+}
+
+model vote {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  flag      Boolean
+  juryId    Int
+  jury      jury     @relation(fields: [juryId], references: [id])
+  userId    Int
+  user      user     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, juryId], name: "userId_juryId_unique_constraint")
+}
+
+model comment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  juryId    Int
+  jury      jury     @relation(fields: [juryId], references: [id])
+  userId    Int
+  user      user     @relation(fields: [userId], references: [id])
+  content   String
+}

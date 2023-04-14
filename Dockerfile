@@ -1,0 +1,11 @@
+FROM node:16 AS builder
+
+COPY . .
+
+RUN yarn
+RUN yarn db-gen-all
+RUN yarn run build
+
+
+EXPOSE 3000
+CMD yarn backoffice-db-push --accept-data-loss && yarn db-gen-all && yarn run start:prod
