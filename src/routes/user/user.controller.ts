@@ -2,6 +2,7 @@ import { Controller, Get, Post, Request, UseGuards ,Body, Param} from '@nestjs/c
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from '../../services/user/user.service';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
+import { RegisterUserDto } from '../dtos/registerUser.dto';
 
 @Controller()
 @ApiTags('User')
@@ -10,11 +11,9 @@ export class UserController {
 
   @Post('users')
   async register(
-	@Body('walletAddress') walletAddress : string,
-	@Body('name') name : string,
-	@Body('email') email?: string,
-	@Body('twitterHandle') twitterHandle? : string
+	  @Body() registerUserDto : RegisterUserDto
   ) {
+	  const {walletAddress, name, email, twitterHandle} = registerUserDto
     return await this.userService.register(walletAddress, name, email, twitterHandle);
   }
 
