@@ -1,13 +1,21 @@
-import { IsArray, IsInt, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateJuryDto {
   @IsInt()
   readonly plaintiffId;
 
   @IsString()
+  @IsNotEmpty()
   readonly plaintiffTitle;
 
   @IsString()
+  @IsNotEmpty()
   readonly plaintiffContent;
 
   @IsArray()
