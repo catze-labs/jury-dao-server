@@ -3,37 +3,58 @@ import { PrismaService } from 'src/services/prisma/prisma.service';
 
 @Injectable()
 export class JuryService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly ps: PrismaService) {}
 
-  public create() {
+  public async create() {
     return Promise.resolve(undefined);
   }
 
-  public getJuries() {
+  public async getJuries() {
     return Promise.resolve(undefined);
   }
 
-  public getJury() {
+  public async getJury(juryId: number) {
     return Promise.resolve(undefined);
   }
 
-  public patchJury() {
+  public async patchJury(juryId: number) {
     return Promise.resolve(undefined);
   }
 
-  public createVote() {
+  public async createVote(juryId: number) {
     return Promise.resolve(undefined);
   }
 
-  public createComment() {
+  public async createComment(juryId: number) {
     return Promise.resolve(undefined);
   }
 
-  public getComments() {
+  public async getComments() {
     return Promise.resolve(undefined);
   }
 
-  public deleteComment() {
-    return Promise.resolve(undefined);
+  public async deleteComment(
+    userId: number,
+    juryId: number,
+    commentId: number,
+  ): Promise<void> {
+    const comment = await this.ps.comment.findUnique({
+      where: {
+        id: commentId,
+      },
+    });
+
+    if (comment == null) {
+      throw new Error('Comment not found');
+    } else {
+      if (comment.userId !== userId) {
+        throw new Error('You are not the owner of this comment');
+      }
+      await this.ps.comment.delete({
+        where: {
+          id: commentId,
+        },
+      });
+    }
   }
 }

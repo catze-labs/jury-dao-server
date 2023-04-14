@@ -2,9 +2,9 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -23,41 +23,46 @@ export class JuryController {
   }
 
   @Get('')
-  async getJuries(@Request() req: any) {
+  async getJuries() {
     return this.juryService.getJuries();
   }
 
   @Get(':juryId')
-  async getJury(@Request() req: any) {
-    return this.juryService.getJury();
+  async getJury(@Param('juryId') juryId: number) {
+    return this.juryService.getJury(juryId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':juryId')
-  async patchJury(@Request() req: any) {
-    return this.juryService.patchJury();
+  async patchJury(@Param('juryId') juryId: number) {
+    return this.juryService.patchJury(juryId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/votes')
-  async createVote() {
-    return this.juryService.createVote();
+  async createVote(@Param('juryId') juryId: number) {
+    return this.juryService.createVote(juryId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/comments')
-  async createComment() {
-    return this.juryService.createComment();
+  async createComment(@Param('juryId') juryId: number) {
+    return this.juryService.createComment(juryId);
   }
 
   @Get(':juryId/comments')
-  async getComments() {
+  async getComments(@Param('juryId') juryId: number) {
     return this.juryService.getComments();
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':juryId/comments/:commentId')
-  async deleteComment() {
-    return this.juryService.deleteComment();
+  async deleteComment(
+    @Param('juryId') juryId: number,
+    @Param('commentId') commentId: number,
+  ) {
+    const userId = 1;
+
+    return this.juryService.deleteComment(userId, juryId, commentId);
   }
 }
