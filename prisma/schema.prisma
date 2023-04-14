@@ -16,7 +16,7 @@ model user {
   updatedAt     DateTime  @updatedAt
   walletAddress String    @unique
   name          String
-  email         String?   @unique
+  email         String?
   twitterHandle String?
   jury          jury[]
   vote          vote[]
