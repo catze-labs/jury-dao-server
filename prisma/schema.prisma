@@ -66,3 +66,14 @@ model comment {
   user      user     @relation(fields: [userId], references: [id])
   content   String
 }
+
+model nonce {
+  id      Int      @id @default(autoincrement())
+  created DateTime @default(now()) @db.DateTime(6)
+  updated DateTime @default(now()) @updatedAt @db.DateTime(6)
+  address String
+  value   String
+  used    Boolean  @default(false)
+
+  @@index([address])
+}
