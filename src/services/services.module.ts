@@ -4,6 +4,7 @@ import { JuryService } from './jury/jury.service';
 import { UserService } from './user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { NonceService } from './nonce/nonce.service';
+import { SignatureService } from './signature/signature.service';
 
 @Module({
   providers: [
@@ -12,8 +13,14 @@ import { NonceService } from './nonce/nonce.service';
     UserService,
     JwtService,
     NonceService,
-    SignatureService
+    SignatureService,
   ],
-  exports: [PrismaService, JuryService, UserService, NonceService, SignatureService],
+  exports: [
+    PrismaService,
+    JuryService,
+    UserService,
+    NonceService,
+    SignatureService,
+  ],
 })
 export class ServicesModule {}
