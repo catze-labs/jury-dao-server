@@ -18,7 +18,7 @@ import { CreateCommentDto } from '../dtos/createComment.dto';
 import { PatchJuryDto } from '../dtos/patchJury.dto';
 import { SignatureService } from '../../services/signature/signature.service';
 import { SignatureDto } from '../dtos/signature.dto';
-
+import {getUser} from 'src/decorators/getUser.decorator';
 @Controller('juries')
 @ApiTags('Jury')
 export class JuryController {
@@ -27,11 +27,13 @@ export class JuryController {
     private readonly signatureService: SignatureService,
   ) {}
 
+  @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Post('')
   async createJury(
     @Body() createJuryDto: CreateJuryDto,
     @Body() signatureDto: SignatureDto,
+    @getUser() user : object
   ) {
     const { walletAddress, signature } = signatureDto;
     const userAddress: string | undefined =
