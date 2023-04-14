@@ -1,7 +1,7 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { PrismaService } from "./services/prisma/prisma.service";
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { PrismaService } from './services/prisma/prisma.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,7 +17,10 @@ async function bootstrap() {
       .setTitle('Jury DAO API DOCS')
       .setDescription('Jury DAO API DOCS')
       .setVersion('0.1')
-      .addBearerAuth({type : 'http', scheme : 'bearer', name : 'JWT', in : 'header'}, 'accessToken')
+      .addBearerAuth(
+        { type: 'http', scheme: 'bearer', name: 'JWT', in: 'header' },
+        'accessToken',
+      )
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('docs', app, document);

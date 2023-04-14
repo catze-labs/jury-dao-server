@@ -8,12 +8,13 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags , ApiBearerAuth} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { JuryService } from '../../services/jury/jury.service';
 import { CreateJuryDto } from '../dtos/createJury.dto';
 import { CreateVoteDto } from '../dtos/createVote.dto';
 import { CreateCommentDto } from '../dtos/createComment.dto';
+import { PatchJuryDto } from '../dtos/patchJury.dto';
 
 @Controller('juries')
 @ApiTags('Jury')
@@ -39,8 +40,11 @@ export class JuryController {
   @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Patch(':juryId')
-  async patchJury(@Param('juryId') juryId: number) {
-    return this.juryService.patchJury(juryId);
+  async patchJury(
+    @Param('juryId') juryId: number,
+    @Body() patchJuryDto: PatchJuryDto,
+  ) {
+    return this.juryService.patchJury(juryId, patchJuryDto);
   }
 
   @ApiBearerAuth('accessToken')
