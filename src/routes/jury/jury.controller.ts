@@ -8,7 +8,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags , ApiBearerAuth} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { JuryService } from '../../services/jury/jury.service';
 import { CreateJuryDto } from '../dtos/createJury.dto';
@@ -36,12 +36,14 @@ export class JuryController {
     return this.juryService.getJury(juryId);
   }
 
+  @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Patch(':juryId')
   async patchJury(@Param('juryId') juryId: number) {
     return this.juryService.patchJury(juryId);
   }
 
+  @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/votes')
   async createVote(
@@ -51,6 +53,7 @@ export class JuryController {
     return this.juryService.createVote(juryId, createVoteDto);
   }
 
+  @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/comments')
   async createComment(
@@ -65,6 +68,7 @@ export class JuryController {
     return this.juryService.getComments(juryId);
   }
 
+  @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Delete(':juryId/comments/:commentId')
   async deleteComment(
