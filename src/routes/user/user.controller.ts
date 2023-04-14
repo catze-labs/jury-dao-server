@@ -11,6 +11,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../../services/user/user.service';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { RegisterUserDto } from '../dtos/registerUser.dto';
+import {getUser} from 'src/decorators/getUser.decorator';
 
 @Controller()
 @ApiTags('User')
@@ -31,8 +32,8 @@ export class UserController {
   @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@Request() req: any) {
-    return req.user;
+  async getProfile(@getUser() user: any) {
+    return user;
   }
 
   @ApiBearerAuth('accessToken')
