@@ -23,7 +23,7 @@ Content-Type: application/json
 
 
 ### Get juries
-GET http://localhost:8010/juries
+GET http://localhost:8010/juries?page=10&size=200
 
 ### Get a jury
 GET http://localhost:8010/juries/2

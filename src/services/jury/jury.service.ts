@@ -43,12 +43,17 @@ export class JuryService {
     });
   }
 
-  public async getJuries() {
+  public async getJuries(page: number, size: number) {
+    if (page < 1) {
+      page = 1;
+    }
     return this.ps.jury.findMany({
       include: {
         plaintiff: true,
         defendant: true,
       },
+      take: size,
+      skip: (page - 1) * size,
     });
   }
 

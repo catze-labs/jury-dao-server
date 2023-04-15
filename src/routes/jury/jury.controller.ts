@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -19,6 +20,8 @@ import { PatchJuryDto } from '../dtos/patchJury.dto';
 import { SignatureService } from '../../services/signature/signature.service';
 import { SignatureDto } from '../dtos/signature.dto';
 import { getUser } from 'src/decorators/getUser.decorator';
+import { PaginationDto } from '../dtos/pagination.dto';
+
 @Controller('juries')
 @ApiTags('Jury')
 export class JuryController {
@@ -44,8 +47,9 @@ export class JuryController {
   }
 
   @Get('')
-  async getJuries() {
-    return this.juryService.getJuries();
+  async getJuries(@Query() paginationDto: PaginationDto) {
+    const { page, size } = paginationDto;
+    return this.juryService.getJuries(page, size);
   }
 
   @Get(':juryId')
