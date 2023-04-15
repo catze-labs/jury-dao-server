@@ -39,13 +39,10 @@ export class JuryController {
     @Body() signatureDto: SignatureDto,
     @getUser() user: Table.user,
   ) {
-    const { signature } = signatureDto;
+    const { walletAddress, signature } = signatureDto;
     const userAddress: string | undefined =
-      await this.signatureService.getAddress(user.walletAddress, signature);
-    this.signatureService.validateUserWalletAddress(
-      userAddress,
-      user.walletAddress,
-    );
+      await this.signatureService.getAddress(walletAddress, signature);
+    this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
 
     return this.juryService.create(createJuryDto);
   }
@@ -70,13 +67,10 @@ export class JuryController {
     @Body() signatureDto: SignatureDto,
     @getUser() user: Table.user,
   ) {
-    const { signature } = signatureDto;
+    const { walletAddress, signature } = signatureDto;
     const userAddress: string | undefined =
-      await this.signatureService.getAddress(user.walletAddress, signature);
-    this.signatureService.validateUserWalletAddress(
-      userAddress,
-      user.walletAddress,
-    );
+      await this.signatureService.getAddress(walletAddress, signature);
+    this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
 
     return this.juryService.patchJury(juryId, patchJuryDto);
   }
@@ -90,13 +84,10 @@ export class JuryController {
     @Body() signatureDto: SignatureDto,
     @getUser() user: Table.user,
   ) {
-    const { signature } = signatureDto;
+    const { walletAddress, signature } = signatureDto;
     const userAddress: string | undefined =
-      await this.signatureService.getAddress(user.walletAddress, signature);
-    this.signatureService.validateUserWalletAddress(
-      userAddress,
-      user.walletAddress,
-    );
+      await this.signatureService.getAddress(walletAddress, signature);
+    this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
     return this.juryService.createVote(juryId, createVoteDto);
   }
 

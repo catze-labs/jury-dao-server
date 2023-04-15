@@ -5,5 +5,10 @@ export class SignatureDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  walletAddress: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
   signature: string;
 }

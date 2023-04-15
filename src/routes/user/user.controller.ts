@@ -10,7 +10,6 @@ import { SignatureService } from '../../services/signature/signature.service';
 @Controller()
 @ApiTags('User')
 export class UserController {
-  constructor(private readonly userService: UserService, private readonly signatureService : SignatureService) {}
   constructor(
     private readonly userService: UserService,
     private readonly signatureService: SignatureService,
@@ -21,19 +20,14 @@ export class UserController {
     @Body() registerUserDto: RegisterUserDto,
     @Body() signatureDto: SignatureDto,
   ) {
-    const { walletAddress, name, email, twitterHandle } = registerUserDto;
+    const { name, email, twitterHandle } = registerUserDto;
 
-    const { signature } = signatureDto;
+    const { walletAddress, signature } = signatureDto;
     const userAddress: string | undefined =
       await this.signatureService.getAddress(walletAddress, signature);
     this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
 
-    return this.userService.register(
-      walletAddress,
-      name,
-      email,
-      twitterHandle,
-    );
+    return this.userService.register(walletAddress, name, email, twitterHandle);
   }
 
   @ApiBearerAuth('accessToken')
