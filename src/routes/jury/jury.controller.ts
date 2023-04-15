@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import type Table from '@prisma/client';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { JuryService } from '../../services/jury/jury.service';
 import { CreateJuryDto } from '../dtos/createJury.dto';
@@ -24,6 +24,16 @@ import { getUser } from 'src/decorators/getUser.decorator';
 import { PaginationDto } from '../dtos/pagination.dto';
 import { GetJuriesDto } from '../dtos/getJuries.dto';
 
+import {
+getCommentPaginationResponse,
+createCommentResponse,
+createVoteResponse,
+patchJuryResponse,
+getJuryPaginationResponse,
+getJuryByIdResponse,
+createJuryResponse
+} from './responseSchema';
+
 @Controller('juries')
 @ApiTags('Jury')
 export class JuryController {
@@ -33,6 +43,7 @@ export class JuryController {
   ) {}
 
   @ApiBearerAuth('accessToken')
+  @ApiResponse(createJuryResponse)
   @UseGuards(JwtAuthGuard)
   @Post('')
   async createJury(
@@ -49,6 +60,7 @@ export class JuryController {
   }
 
   @Get('')
+  @ApiResponse(getJuryPaginationResponse)
   async getJuries(@Query() paginationDto: PaginationDto) {
     const { page, size } = paginationDto;
     return this.juryService.getJuries(page, size);
@@ -67,10 +79,12 @@ export class JuryController {
   }
 
   @Get(':juryId')
+  @ApiResponse(getJuryByIdResponse)
   async getJury(@Param('juryId', ParseIntPipe) juryId: number) {
     return this.juryService.getJury(juryId);
   }
 
+  @ApiResponse(patchJuryResponse)
   @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Patch(':juryId')
@@ -89,6 +103,7 @@ export class JuryController {
   }
 
   @ApiBearerAuth('accessToken')
+  @ApiResponse(createVoteResponse)
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/votes')
   async createVote(
@@ -105,6 +120,7 @@ export class JuryController {
   }
 
   @ApiBearerAuth('accessToken')
+  @ApiResponse(createCommentResponse)
   @UseGuards(JwtAuthGuard)
   @Post(':juryId/comments')
   async createComment(
@@ -118,6 +134,7 @@ export class JuryController {
   }
 
   @Get(':juryId/comments')
+  @ApiResponse(getCommentPaginationResponse)
   async getComments(
     @Param('juryId', ParseIntPipe) juryId: number,
     @Query() paginationDto: PaginationDto,
