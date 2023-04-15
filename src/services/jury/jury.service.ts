@@ -118,6 +118,10 @@ export class JuryService {
       where: {
         id: juryId,
       },
+      include : {
+	plaintiff : true,
+	defendant : true
+      }
     });
     console.log('Jury found');
     if (jury == null) {

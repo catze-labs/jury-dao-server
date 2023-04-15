@@ -2,9 +2,18 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { PrismaService } from './services/prisma/prisma.service';
-
+import {ValidationPipe} from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+
+  app.useGlobalPipes(new ValidationPipe({
+	transform : true,
+	transformOptions : {
+		enableImplicitConversion : true
+	}
+
+  }));
 
   // prisma
   const prismaService = app.get(PrismaService);

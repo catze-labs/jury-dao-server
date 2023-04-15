@@ -41,25 +41,6 @@ export class UserService {
     });
   }
 
-  public async login(walletAddress: string) {
-    const user = await this.prismaService.user.findUnique({
-      where: {
-        walletAddress,
-      },
-    });
-
-    if (!user) {
-      throw new NotFoundException({
-        message: 'User not found',
-      });
-    }
-
-    const payload = { ...user };
-    const jwt = this.jwtService.sign(payload);
-
-    return { accessToken: jwt };
-  }
-
   public async findUsersByWalletAddress(walletAddress: string) {
     return await this.prismaService.user.findMany({
       where: {
