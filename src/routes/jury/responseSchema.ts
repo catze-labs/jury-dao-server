@@ -76,7 +76,7 @@ export const getJuryPaginationResponse = {
 			count : {type : 'integer'},
 			list : {
 				
-			type : 'array', items: { properties : jury}}
+			type : 'array', items: {type : 'object', properties : jury}}
 			}
 
 	}
@@ -144,7 +144,7 @@ export const getCommentPaginationResponse = {
 			count : {type : 'integer'},
 			list : {
 				
-			type : 'array', items: { properties : comment}}
+			type : 'array', items: {type : 'object', properties : comment}}
 			}
 
         }
