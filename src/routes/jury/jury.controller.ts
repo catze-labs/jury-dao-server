@@ -88,7 +88,7 @@ export class JuryController {
     const userAddress: string | undefined =
       await this.signatureService.getAddress(walletAddress, signature);
     this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
-    return this.juryService.createVote(juryId, createVoteDto);
+    return this.juryService.createVote(juryId, user.id, createVoteDto);
   }
 
   @ApiBearerAuth('accessToken')
