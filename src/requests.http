@@ -58,12 +58,29 @@ Content-Type: application/json
   "defendantId": 2
 }
 
+### Get juries should return 200 / negative integer of page
+GET http://localhost:8010/juries?page=-1&size=1
 
-### Get juries
-GET http://localhost:8010/juries?page=10&size=200
+### Get juries should return 200 / negative integer of size
+GET http://localhost:8010/juries?page=1&size=-10
 
-### Get a jury
+### Get juries should return 200 / negative integer of page & size
+GET http://localhost:8010/juries?page=-1&size=-10
+
+### Get juries should return 200 / large number of page
+GET http://localhost:8010/juries?page=99999&size=10
+
+### Get juries should return 200 / large number of page & size
+GET http://localhost:8010/juries?page=99999&size=99999
+
+### Get a jury should return 200
 GET http://localhost:8010/juries/2
+
+### Get a jury should return 404
+GET http://localhost:8010/juries/999999
+
+### Get a jury should return 404
+GET http://localhost:8010/juries/-1
 
 ### Add defense
 PATCH http://localhost:8010/juries/1
@@ -73,7 +90,6 @@ Content-Type: application/json
   "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
 }
 
-
 ### Add a vote
 POST http://localhost:8010/juries/1/votes
 Content-Type: application/json
@@ -82,8 +98,7 @@ Content-Type: application/json
   "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
 }
 
-
-### Add a comment
+### Add a comment should return 201
 POST http://localhost:8010/juries/1/comments
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1MzcwMzYsImV4cCI6MTY4MTU0MDYzNn0.xVBfl03-PlW05EvF5KokfCkIpRSdemxXLZ7PRl6QPJs
@@ -92,8 +107,31 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZ
   "content": "This is comment"
 }
 
-### Get comments
-GET http://localhost:8010/juries/1/comments?page=1&size=100
+### Add a comment should return 401 without JWT
+POST http://localhost:8010/juries/1/comments
+Content-Type: application/json
+
+{
+  "content": "This is comment"
+}
+
+### Get comments should return 200 / negative integer of page
+GET http://localhost:8010/juries/1/comments?page=-1&size=1
+
+### Get comments should return 200 / negative integer of size
+GET http://localhost:8010/juries/1/comments?page=1&size=-10
+
+### Get comments should return 200 / negative integer of page & size
+GET http://localhost:8010/juries/1/comments?page=-1&size=-10
+
+### Get comments should return 200 / large number of page
+GET http://localhost:8010/juries/1/comments?page=99999&size=10
+
+### Get comments should return 200 / large number of page & size
+GET http://localhost:8010/juries/1/comments?page=99999&size=99999
+
+### Get comments should return 404
+GET http://localhost:8010/juries/999999/comments?page=99999&size=99999
 
 ### Delte a comment
 GET http://localhost:8010/juries/1/comments
@@ -105,14 +143,31 @@ Content-Type: application/json
 {
   "name": "mgmgmg2",
   "email": "coalsrbs7@gmail.com",
-  "walletAddress": "0x0000a817Ad92f9bae05DC18fA5312eB3F4800000"
+  "walletAddress": "0x0000a817Ad92f9bae05DC18fA5312eB3F4800000",
+  "signature": "129839ahsdasd"
 }
 
-### Get profile
+### Get profile should return 200
+GET http://localhost:8010/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1MzcwMzYsImV4cCI6MTY4MTU0MDYzNn0.xVBfl03-PlW05EvF5KokfCkIpRSdemxXLZ7PRl6QPJs
+
+### Get profile should return 401
 GET http://localhost:8010/profile
 
-### Get user
+### Get user should return 200
+GET http://localhost:8010/users/0x512ADC0aB9B79dc842e19e91547da8dF874F5682
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1MzcwMzYsImV4cCI6MTY4MTU0MDYzNn0.xVBfl03-PlW05EvF5KokfCkIpRSdemxXLZ7PRl6QPJs
+
+
+### Get user should return 401
 GET http://localhost:8010/users/0x512ADC0aB9B79dc842e19e91547da8dF874F5682
 
-### Nonce
+
+### Nonce should return 201
 POST http://localhost:8010/nonce
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1MzcwMzYsImV4cCI6MTY4MTU0MDYzNn0.xVBfl03-PlW05EvF5KokfCkIpRSdemxXLZ7PRl6QPJs
+
+
+### Nonce should return 401
+POST http://localhost:8010/nonce
+

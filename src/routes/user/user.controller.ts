@@ -5,23 +5,28 @@ import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { RegisterUserDto } from '../dtos/registerUser.dto';
 import { getUser } from 'src/decorators/getUser.decorator';
 import { SignatureDto } from '../dtos/signature.dto';
+import { SignatureService } from '../../services/signature/signature.service';
 
 @Controller()
 @ApiTags('User')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly signatureService: SignatureService,
+  ) {}
 
   @Post('users')
   async register(
     @Body() registerUserDto: RegisterUserDto,
     @Body() signatureDto: SignatureDto,
   ) {
-    const { walletAddress, signature } = signatureDto;
+    const { walletAddress, name, email, twitterHandle } = registerUserDto;
+
+    const { signature } = signatureDto;
     const userAddress: string | undefined =
       await this.signatureService.getAddress(walletAddress, signature);
     this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
 
-    const { walletAddress, name, email, twitterHandle } = registerUserDto;
     return await this.userService.register(
       walletAddress,
       name,
