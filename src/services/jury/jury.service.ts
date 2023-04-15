@@ -8,6 +8,7 @@ import { CreateJuryDto } from '../../routes/dtos/createJury.dto';
 import Table, { Prisma } from '@prisma/client';
 import { PatchJuryDto } from '../../routes/dtos/patchJury.dto';
 import { CreateVoteDto } from '../../routes/dtos/createVote.dto';
+import { GetJuriesFilter } from '../../constants';
 
 @Injectable()
 export class JuryService {
@@ -56,14 +57,34 @@ export class JuryService {
     });
   }
 
-  public async getJuries(page: number, size: number) {
+  public async getJuries(
+    page: number,
+    size: number,
+    filter?: GetJuriesFilter,
+    userId?: number,
+  ) {
     const adjustedPagination = this.adjustPagination(page, size);
+    let where = {};
+    if (filter === GetJuriesFilter.ALL_OF_MINE) {
+      where = {
+        OR: [{ plaintiffId: userId }, { defendantId: userId }],
+      };
+    } else if (filter === GetJuriesFilter.AS_DEFENDANT) {
+      where = {
+        defendantId: userId,
+      };
+    } else if (filter === GetJuriesFilter.AS_PLAINTIFF) {
+      where = {
+        plaintiffId: userId,
+      };
+    }
 
     return this.ps.jury.findMany({
       include: {
         plaintiff: true,
         defendant: true,
       },
+      where,
       take: adjustedPagination.size,
       skip: (adjustedPagination.page - 1) * adjustedPagination.size,
     });

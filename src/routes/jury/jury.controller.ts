@@ -22,6 +22,7 @@ import { SignatureService } from '../../services/signature/signature.service';
 import { SignatureDto } from '../dtos/signature.dto';
 import { getUser } from 'src/decorators/getUser.decorator';
 import { PaginationDto } from '../dtos/pagination.dto';
+import { GetJuriesDto } from '../dtos/getJuries.dto';
 
 @Controller('juries')
 @ApiTags('Jury')
@@ -51,6 +52,18 @@ export class JuryController {
   async getJuries(@Query() paginationDto: PaginationDto) {
     const { page, size } = paginationDto;
     return this.juryService.getJuries(page, size);
+  }
+
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard)
+  @Get('/my')
+  async getMyJuries(
+    @Query() paginationDto: PaginationDto,
+    @Query() getJuriesDto: GetJuriesDto,
+    @getUser() user: Table.user,
+  ) {
+    const { page, size } = paginationDto;
+    return this.juryService.getJuries(page, size, getJuriesDto.filter, user.id);
   }
 
   @Get(':juryId')

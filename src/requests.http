@@ -12,10 +12,8 @@ POST http://localhost:8010/auth
 Content-Type: application/json
 
 {
-  "walletAddress": "0x0000a817Ad92f9bae05DC18fA5312eB3F4800000"
+  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
 }
-
-
 
 ### Auth(Login) should return 404
 POST http://localhost:8010/auth
@@ -77,6 +75,24 @@ GET http://localhost:8010/juries?page=99999&size=10
 
 ### Get juries should return 200 / large number of page & size
 GET http://localhost:8010/juries?page=99999&size=99999
+
+### Get my juries should return 200
+GET http://localhost:8010/juries/my?page=1&size=10&filter=ALL
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1NDczNTIsImV4cCI6MTY5MTU0NzM1MX0.QPd6TBnzPqrDAL7sN4g_w6ylq3ehNj32dUmy2NyPWZQ
+
+### Get my juries should return 200
+GET http://localhost:8010/juries/my?page=1&size=10&filter=AS_DEFENDANT
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1NDczNTIsImV4cCI6MTY5MTU0NzM1MX0.QPd6TBnzPqrDAL7sN4g_w6ylq3ehNj32dUmy2NyPWZQ
+
+### Get my juries should return 200
+GET http://localhost:8010/juries/my?page=1&size=10&filter=AS_PLAINTIFF
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1NDczNTIsImV4cCI6MTY5MTU0NzM1MX0.QPd6TBnzPqrDAL7sN4g_w6ylq3ehNj32dUmy2NyPWZQ
+
+
+### Get my juries should return 400
+GET http://localhost:8010/juries/my?page=1&size=10&filter=WRONGFILTER
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1NDczNTIsImV4cCI6MTY5MTU0NzM1MX0.QPd6TBnzPqrDAL7sN4g_w6ylq3ehNj32dUmy2NyPWZQ
+
 
 ### Get a jury should return 200
 GET http://localhost:8010/juries/2
