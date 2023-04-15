@@ -8,8 +8,8 @@ export class RegisterUserDto {
   name: string;
 
   @ApiProperty()
-  @IsOptional()
   @IsEmail()
+  @IsOptional()
   email: string;
 
   @ApiProperty()
