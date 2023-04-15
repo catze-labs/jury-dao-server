@@ -258,14 +258,16 @@ export class JuryService {
     let step1DefendantVoteCount = 0;
     let step2PlaintiffVoteCount = 0;
     let step2DefendantVoteCount = 0;
+    let step3PlaintiffVoteCount = 0;
+    let step3DefendantVoteCount = 0;
     jury.votes.forEach((vote) => {
-      vote.flag
-        ? vote.step === 1
-          ? step1PlaintiffVoteCount++
-          : step1DefendantVoteCount++
-        : vote.step === 2
-        ? step2PlaintiffVoteCount++
-        : step2DefendantVoteCount++;
+      if (vote.step === 1) {
+        vote.flag ? step1PlaintiffVoteCount++ : step1DefendantVoteCount++;
+      } else if (vote.step === 2) {
+        vote.flag ? step2PlaintiffVoteCount++ : step2DefendantVoteCount++;
+      } else if (vote.step === 3) {
+        vote.flag ? step3PlaintiffVoteCount++ : step3DefendantVoteCount++;
+      }
     });
     const { votes, ...remain } = jury;
 
@@ -275,6 +277,8 @@ export class JuryService {
       step1DefendantVoteCount,
       step2PlaintiffVoteCount,
       step2DefendantVoteCount,
+      step3PlaintiffVoteCount,
+      step3DefendantVoteCount,
     };
   }
 }
