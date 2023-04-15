@@ -119,7 +119,7 @@ export class JuryService {
     userId: number,
     createVoteDto: CreateVoteDto,
   ) {
-    await this.getJuryOrThrow(juryId);
+    const jury = await this.getJuryOrThrow(juryId);
     const vote = this.ps.vote.findUnique({
       where: {
         userId_juryId_unique_constraint: {
@@ -134,6 +134,7 @@ export class JuryService {
 
     const data: Prisma.voteCreateInput = {
       flag: createVoteDto.flag,
+      step: jury.step,
       jury: {
         connect: {
           id: juryId,
