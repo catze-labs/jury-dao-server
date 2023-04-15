@@ -10,6 +10,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import type Table from '@prisma/client';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { JuryService } from '../../services/jury/jury.service';
@@ -88,13 +89,20 @@ export class JuryController {
   async createComment(
     @Param('juryId', ParseIntPipe) juryId: number,
     @Body() createCommentDto: CreateCommentDto,
+    @getUser() user: Table.user,
   ) {
-    return this.juryService.createComment(juryId, createCommentDto);
+    const userId = user.id;
+    const { content } = createCommentDto;
+    return this.juryService.createComment(juryId, userId, content);
   }
 
   @Get(':juryId/comments')
-  async getComments(@Param('juryId', ParseIntPipe) juryId: number) {
-    return this.juryService.getComments(juryId);
+  async getComments(
+    @Param('juryId', ParseIntPipe) juryId: number,
+    @Query() paginationDto: PaginationDto,
+  ) {
+    const { page, size } = paginationDto;
+    return this.juryService.getComments(juryId, page, size);
   }
 
   @ApiBearerAuth('accessToken')

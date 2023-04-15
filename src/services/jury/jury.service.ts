@@ -79,17 +79,41 @@ export class JuryService {
     // })
   }
 
-  public async createComment(juryId: number, commentData: object) {
-    const jury = await this.getJuryOrThrow(juryId);
-    return Promise.resolve(undefined);
+  public async createComment(juryId: number, userId: number, content: string) {
+    await this.getJuryOrThrow(juryId);
+    const data: Prisma.commentCreateInput = {
+      jury: {
+        connect: {
+          id: juryId,
+        },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+      content,
+    };
+    return this.ps.comment.create({
+      data,
+    });
   }
 
-  public async getComments(juryId: number) {
-    const jury = await this.getJuryOrThrow(juryId);
+  public async getComments(juryId: number, page: number, size: number) {
+    await this.getJuryOrThrow(juryId);
+    if (page < 1) {
+      page = 1;
+    }
+
     return this.ps.comment.findMany({
       where: {
         juryId,
       },
+      include: {
+        user: true,
+      },
+      take: size,
+      skip: (page - 1) * size,
     });
   }
 
