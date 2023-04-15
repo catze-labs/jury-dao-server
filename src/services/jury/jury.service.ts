@@ -9,6 +9,7 @@ import Table, { Prisma } from '@prisma/client';
 import { PatchJuryDto } from '../../routes/dtos/patchJury.dto';
 import { CreateVoteDto } from '../../routes/dtos/createVote.dto';
 import { GetJuriesFilter } from '../../constants';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class JuryService {
@@ -71,6 +72,7 @@ export class JuryService {
         include: {
           plaintiff: true,
           defendant: true,
+          votes: true,
         },
         where,
         take: adjustedPagination.size,
@@ -81,7 +83,34 @@ export class JuryService {
       }),
     ]);
 
-    return { list, count };
+    const now = dayjs();
+
+    let juryList = [];
+    list.forEach((jury) => {
+      let status = '';
+      if (userId !== null) {
+        const finishTime = dayjs(jury.createdAt).add(8, 'hours');
+        if (finishTime.isBefore(now)) {
+          let plaintiffVoteCount = 0;
+          let defendantVoteCount = 0;
+          jury.votes.forEach((vote) => {
+            vote.flag ? plaintiffVoteCount++ : defendantVoteCount++;
+          });
+          const isPlaintiffWin = plaintiffVoteCount > defendantVoteCount;
+          if (jury.plaintiffId === userId) {
+            status = isPlaintiffWin ? 'You Win' : 'You Lose';
+          } else if (jury.defendantId === userId) {
+            status = isPlaintiffWin ? 'You Lose' : 'You Win';
+          }
+        } else {
+          status = 'NOW';
+        }
+      }
+
+      juryList.push({ ...jury, status });
+    });
+
+    return { list: juryList, count };
   }
 
   public async getJury(juryId: number) {
