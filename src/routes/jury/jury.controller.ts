@@ -72,7 +72,7 @@ export class JuryController {
       await this.signatureService.getAddress(walletAddress, signature);
     this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
 
-    return this.juryService.patchJury(juryId, patchJuryDto);
+    return this.juryService.patchJury(juryId, user.id, patchJuryDto);
   }
 
   @ApiBearerAuth('accessToken')

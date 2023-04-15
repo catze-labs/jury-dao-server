@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma/prisma.service';
 import { CreateJuryDto } from '../../routes/dtos/createJury.dto';
-import { Prisma } from '@prisma/client';
+import Table, { Prisma } from '@prisma/client';
 import { PatchJuryDto } from '../../routes/dtos/patchJury.dto';
 
 @Injectable()
@@ -73,15 +73,27 @@ export class JuryService {
     return this.getJuryOrThrow(juryId);
   }
 
-  public async patchJury(juryId: number, patchJuryDto: PatchJuryDto) {
-    // TODO: check signature
+  public async patchJury(
+    juryId: number,
+    userId: number,
+    patchJuryDto: PatchJuryDto,
+  ): Promise<Table.jury> {
     const jury = await this.getJuryOrThrow(juryId);
-    // TODO: check user is a defendant of the jury
-    // if (jury.defendantId == userId) {
-    //
-    // }
+    if (jury.defendantId !== userId) {
+      throw new ForbiddenException("You can't patch this jury");
+    }
 
-    return Promise.resolve(undefined);
+    return this.ps.jury.update({
+      where: {
+        id: juryId,
+      },
+      data: {
+        defendantTitle: patchJuryDto.defendantTitle,
+        defendantContent: patchJuryDto.defendantContent,
+        defendantReferenceLink:
+          patchJuryDto.defendantReferenceLink as Prisma.InputJsonArray,
+      },
+    });
   }
 
   public async createVote(juryId: number, voteData: object) {
@@ -157,7 +169,9 @@ export class JuryService {
     }
   }
 
-  private async getJuryOrThrow(juryId: number) {
+  private async getJuryOrThrow(
+    juryId: number,
+  ): Promise<Table.jury & { plaintiff: Table.user; defendant: Table.user }> {
     const jury = await this.ps.jury.findUnique({
       where: {
         id: juryId,

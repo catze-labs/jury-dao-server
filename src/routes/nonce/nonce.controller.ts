@@ -1,10 +1,8 @@
-import { Controller, Post, UseGuards } from '@nestjs/common';
-import type Table from '@prisma/client';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { createNonceResponse } from './responseSchema';
 import { NonceService } from '../../services/nonce/nonce.service';
-import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
-import { getUser } from '../../decorators/getUser.decorator';
+import { CreateNonceDto } from '../dtos/createNonce.dto';
 
 @Controller('nonce')
 @ApiTags('Nonce')
@@ -13,8 +11,10 @@ export class NonceController {
 
   @Post()
   @ApiResponse(createNonceResponse)
-  async createNonce(@getUser() user: Table.user) {
-    const nonce: string = await this.nonceService.create(user.walletAddress);
+  async createNonce(@Body() createNonceDto: CreateNonceDto) {
+    const nonce: string = await this.nonceService.create(
+      createNonceDto.walletAddress,
+    );
     return { nonce };
   }
 }

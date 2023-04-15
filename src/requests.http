@@ -165,7 +165,12 @@ GET http://localhost:8010/users/0x512ADC0aB9B79dc842e19e91547da8dF874F5682
 
 ### Nonce should return 201
 POST http://localhost:8010/nonce
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1MzcwMzYsImV4cCI6MTY4MTU0MDYzNn0.xVBfl03-PlW05EvF5KokfCkIpRSdemxXLZ7PRl6QPJs
+Content-Type: application/json
+
+{
+  "walletAddress": "0x0000a817Ad92f9bae05DC18fA5312eB3F4800000"
+}
+
 
 
 ### Nonce should return 401
