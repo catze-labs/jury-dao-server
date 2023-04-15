@@ -1,7 +1,10 @@
-### Health
+### Health should return 200
 GET http://localhost:8010/
 
-### Auth(Login)
+### Non-exist api should return 404
+GET http://localhost:8010/1ibac97h121?asd=12&nfkjd=4vnd
+
+### Auth(Login) should return 201
 POST http://localhost:8010/auth
 Content-Type: application/json
 
@@ -9,8 +12,42 @@ Content-Type: application/json
   "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
 }
 
+### Auth(Login) should return 404
+POST http://localhost:8010/auth
+Content-Type: application/json
 
-### Create a jury
+{
+  "walletAddress": "0xbadcoffeebadcoffeebadcoffeebadcoffeebadcoffee"
+}
+
+### Create a jury without token should return 401
+POST http://localhost:8010/juries
+Content-Type: application/json
+
+{
+  "plaintiffId": 1,
+  "plaintiffTitle": "test1",
+  "plaintiffContent": "test1test1",
+  "defendantId": 2,
+  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB",
+  "signature": "askjdnjqwne12o"
+}
+
+### Create a jury should with wrong walletAddress & signature combination should return 403
+POST http://localhost:8010/juries
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1MzcwMzYsImV4cCI6MTY4MTU0MDYzNn0.xVBfl03-PlW05EvF5KokfCkIpRSdemxXLZ7PRl6QPJs
+
+{
+  "plaintiffId": 1,
+  "plaintiffTitle": "test1",
+  "plaintiffContent": "test1test1",
+  "defendantId": 2,
+  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB",
+  "signature": "askjdnjqwne12o"
+}
+
+### Create a jury without token should return 401
 POST http://localhost:8010/juries
 Content-Type: application/json
 
