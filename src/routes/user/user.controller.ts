@@ -16,7 +16,7 @@ export class UserController {
   ) {}
 
   @Post('users')
-  @ApiResponse(regiserUserResponse)
+  @ApiResponse(registerUserResponse)
   async register(
     @Body() registerUserDto: RegisterUserDto,
     @Body() signatureDto: SignatureDto,
