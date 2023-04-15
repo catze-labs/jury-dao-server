@@ -13,7 +13,7 @@ export class NonceController {
 
   @Post()
   @ApiResponse(createNonceResponse)
-  async createNonce(@getUser() user: Table.user) {
+  async createNonce(@Body('walletAddress') walletAddress : string) {
     const nonce: string = await this.nonceService.create(user.walletAddress);
     return { nonce };
   }
