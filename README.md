@@ -1,73 +1,43 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+![image](https://user-images.githubusercontent.com/65929678/232244423-20b3e899-92b7-4b3e-8fbe-3c31ba2b5055.png)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Jury DAO Back-end
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+> This is the buidle of [ETHGlobal Tokyo 2023](https://ethglobal.com/events/tokyo).
 
-## Description
+> We are still working on it!
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## What is Jury DAO?
 
-## Installation
+[Checkout the information](https://github.com/catze-labs/jury-dao-info)
 
-```bash
-$ yarn install
-```
+JuryDAO is a decentralized autonomous organization (DAO) that aims to provide a decentralized dispute resolution system on the blockchain. It allows users to create and vote on cases, stake tokens as collateral, and engage in a transparent and decentralized decision-making process.
 
-## Running the app
 
-```bash
-# development
-$ yarn run start
+## Main Features
 
-# watch mode
-$ yarn run start:dev
+- Case creation: Users can create new dispute resolution cases by submitting a title, description, and stake amount.
+- Case voting: Users can vote on cases by staking their JRY tokens and indicating their decision.
+- Jury selection: The DAO selects a randomly chosen jury from the community members to vote on each case.
+- Transparent decision-making: All decisions and votes are recorded on the blockchain and can be audited for transparency.
+- Reward system: Users who participate in the dispute resolution process as jurors are rewarded with JRY tokens as an incentive.
+- Staking and unstaking: Users can stake and unstake their JRY tokens as collateral for cases, and the tokens are locked during the resolution process.
 
-# production mode
-$ yarn run start:prod
-```
 
-## Test
+## Project Detail
+
+### 1. Library
+
+- Nest.js : 13.2.4
+- prisma
+
+### 2. Structures
+
+Feature based file system with concerns of serverless paradigm.
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+src/
+├─ auth/  # control authentication
+├─ decorators/  # util function for user
+├─ routes/ # controller
+├─ services/ # main business logics
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
