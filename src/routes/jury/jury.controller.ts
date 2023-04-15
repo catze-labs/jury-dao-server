@@ -30,6 +30,7 @@ createCommentResponse,
 createVoteResponse,
 patchJuryResponse,
 getJuryPaginationResponse,
+getMyJuryPaginationResponse,
 getJuryByIdResponse,
 createJuryResponse
 } from './responseSchema';
@@ -66,6 +67,7 @@ export class JuryController {
     return this.juryService.getJuries(page, size);
   }
 
+  @ApiResponse(getMyJuryPaginationResponse)
   @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Get('/my')

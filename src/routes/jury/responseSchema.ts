@@ -83,6 +83,25 @@ export const getJuryPaginationResponse = {
 
 }
 
+
+export const getMyJuryPaginationResponse = {
+
+	status : 200,
+	description : "Get Jury list",
+	schema : {
+
+		properties : {
+
+			count : {type : 'integer'},
+			list : {
+				
+			type : 'array', items: { properties : jury}}
+			}
+
+	}
+
+}
+
 export const patchJuryResponse = {
 
 	status : 200,
