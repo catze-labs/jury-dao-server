@@ -171,8 +171,3 @@ Content-Type: application/json
   "walletAddress": "0x0000a817Ad92f9bae05DC18fA5312eB3F4800000"
 }
 
-
-
-### Nonce should return 401
-POST http://localhost:8010/nonce
-
