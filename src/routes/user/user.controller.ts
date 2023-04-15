@@ -10,6 +10,7 @@ import { SignatureService } from '../../services/signature/signature.service';
 @Controller()
 @ApiTags('User')
 export class UserController {
+  constructor(private readonly userService: UserService, private readonly signatureService : SignatureService) {}
   constructor(
     private readonly userService: UserService,
     private readonly signatureService: SignatureService,
@@ -27,7 +28,7 @@ export class UserController {
       await this.signatureService.getAddress(walletAddress, signature);
     this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
 
-    return await this.userService.register(
+    return this.userService.register(
       walletAddress,
       name,
       email,
