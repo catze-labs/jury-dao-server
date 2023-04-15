@@ -13,7 +13,6 @@ export class NonceController {
 
   @Post()
   @ApiResponse(createNonceResponse)
-  @UseGuards(JwtAuthGuard)
   async createNonce(@getUser() user: Table.user) {
     const nonce: string = await this.nonceService.create(user.walletAddress);
     return { nonce };
