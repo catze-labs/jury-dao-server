@@ -44,7 +44,12 @@ export class JuryService {
   }
 
   public async getJuries() {
-    return this.ps.jury.findMany();
+    return this.ps.jury.findMany({
+      include: {
+        plaintiff: true,
+        defendant: true,
+      },
+    });
   }
 
   public async getJury(juryId: number) {
@@ -118,10 +123,10 @@ export class JuryService {
       where: {
         id: juryId,
       },
-      include : {
-	plaintiff : true,
-	defendant : true
-      }
+      include: {
+        plaintiff: true,
+        defendant: true,
+      },
     });
     console.log('Jury found');
     if (jury == null) {
