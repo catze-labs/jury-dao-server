@@ -11,11 +11,14 @@ Content-Type: application/json
 
 
 ### Create a jury
-GET http://localhost:8010/juries
+POST http://localhost:8010/juries
 Content-Type: application/json
 
 {
-  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
+  "plaintiffId": 1,
+  "plaintiffTitle": "test1",
+  "plaintiffContent": "test1test1",
+  "defendantId": 2
 }
 
 
@@ -23,7 +26,7 @@ Content-Type: application/json
 GET http://localhost:8010/juries
 
 ### Get a jury
-GET http://localhost:8010/juries/1
+GET http://localhost:8010/juries/2
 
 ### Add defense
 PATCH http://localhost:8010/juries/1
@@ -60,6 +63,15 @@ GET http://localhost:8010/juries/1/comments
 
 ### Sign up
 POST http://localhost:8010/users
+Content-Type: application/json
+
+{
+  "name": "mgmgmg2",
+  "email": "coalsrbs7@gmail.com",
+  "walletAddress": "0x0000a817Ad92f9bae05DC18fA5312eB3F4800000"
+}
+
+
 
 ### Get profile
 GET http://localhost:8010/profile
