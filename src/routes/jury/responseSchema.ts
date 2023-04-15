@@ -57,7 +57,7 @@ export const getJuryByIdResponse = {
 		properties : {
 			...jury,
 			plaintiff :{ type : 'object', properties :  user},
-			defendant : {type : 'object', propertiee : user},
+			defendant : {type : 'object', properties : user},
 
 		}
 	}
