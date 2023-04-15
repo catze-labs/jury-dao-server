@@ -7,6 +7,7 @@ import { PrismaService } from 'src/services/prisma/prisma.service';
 import { CreateJuryDto } from '../../routes/dtos/createJury.dto';
 import Table, { Prisma } from '@prisma/client';
 import { PatchJuryDto } from '../../routes/dtos/patchJury.dto';
+import { CreateVoteDto } from '../../routes/dtos/createVote.dto';
 
 @Injectable()
 export class JuryService {
@@ -98,11 +99,41 @@ export class JuryService {
     });
   }
 
-  public async createVote(juryId: number, voteData: object) {
-    const jury = await this.getJuryOrThrow(juryId);
-    // return this.ps.vote.create({
-    //   data: voteData
-    // })
+  public async createVote(
+    juryId: number,
+    userId: number,
+    createVoteDto: CreateVoteDto,
+  ) {
+    await this.getJuryOrThrow(juryId);
+    const vote = this.ps.vote.findUnique({
+      where: {
+        userId_juryId_unique_constraint: {
+          juryId,
+          userId,
+        },
+      },
+    });
+    if (vote != null) {
+      throw new ForbiddenException('You already voted for this jury');
+    }
+
+    const data: Prisma.voteCreateInput = {
+      flag: createVoteDto.flag,
+      jury: {
+        connect: {
+          id: juryId,
+        },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+    };
+
+    return this.ps.vote.create({
+      data,
+    });
   }
 
   public async createComment(juryId: number, userId: number, content: string) {
