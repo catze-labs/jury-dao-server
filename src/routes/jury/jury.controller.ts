@@ -119,9 +119,8 @@ export class JuryController {
   async deleteComment(
     @Param('juryId', ParseIntPipe) juryId: number,
     @Param('commentId', ParseIntPipe) commentId: number,
+    @getUser() user: Table.user,
   ) {
-    const userId = 1;
-
-    return this.juryService.deleteComment(userId, juryId, commentId);
+    return this.juryService.deleteComment(user.id, juryId, commentId);
   }
 }

@@ -4,13 +4,18 @@ GET http://localhost:8010/
 ### Non-exist api should return 404
 GET http://localhost:8010/1ibac97h121?asd=12&nfkjd=4vnd
 
+#{
+#  "walletAddress": "0x0000a817Ad92f9bae05DC18fA5312eB3F4800000"
+#}
 ### Auth(Login) should return 201
 POST http://localhost:8010/auth
 Content-Type: application/json
 
 {
-  "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB"
+  "walletAddress": "0x0000a817Ad92f9bae05DC18fA5312eB3F4800000"
 }
+
+
 
 ### Auth(Login) should return 404
 POST http://localhost:8010/auth
@@ -148,8 +153,24 @@ GET http://localhost:8010/juries/1/comments?page=99999&size=99999
 ### Get comments should return 404
 GET http://localhost:8010/juries/999999/comments?page=99999&size=99999
 
-### Delte a comment
-GET http://localhost:8010/juries/1/comments
+### Delte a comment should return 200
+DELETE http://localhost:8010/juries/1/comments/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMTozOS45OTRaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMTozOS45OTRaIiwid2FsbGV0QWRkcmVzcyI6IjB4MDAwMGE4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwMDAwMCIsIm5hbWUiOiJtZ21nbWcyIiwiZW1haWwiOiJjb2Fsc3JiczdAZ21haWwuY29tIiwidHdpdHRlckhhbmRsZSI6bnVsbCwiaWF0IjoxNjgxNTQyMjU3LCJleHAiOjE2ODE1NDU4NTd9.2pZdDIAR9JhiQDX9WUsS7P186Xyrbk8QNXfV8YjamWM
+
+### Delte a comment should return 404
+DELETE http://localhost:8010/juries/1/comments/-1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1NDE2ODQsImV4cCI6MTY4MTU0NTI4NH0.6agr1e-OZoQs8exrIqCTRj-zxjCaRX9jlkMHcdFmwBk
+
+
+### Delte a comment should return 404
+DELETE http://localhost:8010/juries/1/comments/-1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1NDE2ODQsImV4cCI6MTY4MTU0NTI4NH0.6agr1e-OZoQs8exrIqCTRj-zxjCaRX9jlkMHcdFmwBk
+
+
+### Delte a comment should return 404
+DELETE http://localhost:8010/juries/99999/comments/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNC0xNVQwNToxMToxOC44MjBaIiwid2FsbGV0QWRkcmVzcyI6IjB4NzE0Q2E4MTdBZDkyZjliYWUwNURDMThmQTUzMTJlQjNGNDgwY0NDQiIsIm5hbWUiOiJtZ21nbWciLCJlbWFpbCI6ImNvYWxzcmJzN0BnbWFpbC5jb20iLCJ0d2l0dGVySGFuZGxlIjpudWxsLCJpYXQiOjE2ODE1NDE2ODQsImV4cCI6MTY4MTU0NTI4NH0.6agr1e-OZoQs8exrIqCTRj-zxjCaRX9jlkMHcdFmwBk
+
 
 ### Sign up
 POST http://localhost:8010/users
