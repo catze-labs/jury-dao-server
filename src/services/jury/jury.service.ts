@@ -79,21 +79,22 @@ export class JuryService {
       };
     }
 
-    const list = await this.ps.jury.findMany({
-      include: {
-        plaintiff: true,
-        defendant: true,
-      },
-      where,
-      take: adjustedPagination.size,
-      skip: (adjustedPagination.page - 1) * adjustedPagination.size,
-    });
+    const [list, count] = await Promise.all([
+      this.ps.jury.findMany({
+        include: {
+          plaintiff: true,
+          defendant: true,
+        },
+        where,
+        take: adjustedPagination.size,
+        skip: (adjustedPagination.page - 1) * adjustedPagination.size,
+      }),
+      this.ps.jury.count({
+        where,
+      }),
+    ]);
 
-    const count = await this.ps.jury.count({
-    where
-    })
-
-    return {list, count}
+    return { list, count };
   }
 
   public async getJury(juryId: number) {
@@ -187,25 +188,25 @@ export class JuryService {
     await this.getJuryOrThrow(juryId);
     const adjustedPagination = this.adjustPagination(page, size);
 
-    const count = await this.ps.comment.count({
+    const [count, list] = await Promise.all([
+      this.ps.comment.count({
+        where: {
+          juryId,
+        },
+      }),
+      this.ps.comment.findMany({
+        where: {
+          juryId,
+        },
+        include: {
+          user: true,
+        },
+        take: adjustedPagination.size,
+        skip: (adjustedPagination.page - 1) * adjustedPagination.size,
+      }),
+    ]);
 
-	    where : {
-
-		    juryId
-	    }
-    })
-    const list = await this.ps.comment.findMany({
-      where: {
-        juryId,
-      },
-      include: {
-        user: true,
-      },
-      take: adjustedPagination.size,
-      skip: (adjustedPagination.page - 1) * adjustedPagination.size,
-    });
-
-    return {count, list}
+    return { count, list };
   }
 
   public async deleteComment(
@@ -252,13 +253,27 @@ export class JuryService {
     if (jury == null) {
       throw new NotFoundException({ message: 'Jury not found' });
     }
-    let plaintiffVoteCount = 0;
-    let defendantVoteCount = 0;
+    let step1PlaintiffVoteCount = 0;
+    let step1DefendantVoteCount = 0;
+    let step2PlaintiffVoteCount = 0;
+    let step2DefendantVoteCount = 0;
     jury.votes.forEach((vote) => {
-      vote.flag ? plaintiffVoteCount++ : defendantVoteCount++;
+      vote.flag
+        ? vote.step === 1
+          ? step1PlaintiffVoteCount++
+          : step1DefendantVoteCount++
+        : vote.step === 2
+        ? step2PlaintiffVoteCount++
+        : step2DefendantVoteCount++;
     });
     const { votes, ...remain } = jury;
 
-    return { ...remain, plaintiffVoteCount, defendantVoteCount };
+    return {
+      ...remain,
+      step1PlaintiffVoteCount,
+      step1DefendantVoteCount,
+      step2PlaintiffVoteCount,
+      step2DefendantVoteCount,
+    };
   }
 }
