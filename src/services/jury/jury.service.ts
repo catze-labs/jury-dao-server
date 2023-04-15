@@ -14,19 +14,6 @@ import { GetJuriesFilter } from '../../constants';
 export class JuryService {
   constructor(private readonly ps: PrismaService) {}
 
-  private adjustPagination(page: number, size: number) {
-    if (page < 1) {
-      page = 1;
-    }
-    if (size < 1) {
-      size = 1;
-    }
-    if (size > 50) {
-      size = 50;
-    }
-    return { page, size };
-  }
-
   public async create(createJuryDto: CreateJuryDto) {
     const {
       plaintiffId,
@@ -237,6 +224,19 @@ export class JuryService {
         },
       });
     }
+  }
+
+  private adjustPagination(page: number, size: number) {
+    if (page < 1) {
+      page = 1;
+    }
+    if (size < 1) {
+      size = 1;
+    }
+    if (size > 50) {
+      size = 50;
+    }
+    return { page, size };
   }
 
   private async getJuryOrThrow(juryId: number) {

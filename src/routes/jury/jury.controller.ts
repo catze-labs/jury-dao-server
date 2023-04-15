@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import type Table from '@prisma/client';
-import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { JuryService } from '../../services/jury/jury.service';
 import { CreateJuryDto } from '../dtos/createJury.dto';
@@ -25,14 +25,14 @@ import { PaginationDto } from '../dtos/pagination.dto';
 import { GetJuriesDto } from '../dtos/getJuries.dto';
 
 import {
-getCommentPaginationResponse,
-createCommentResponse,
-createVoteResponse,
-patchJuryResponse,
-getJuryPaginationResponse,
-getMyJuryPaginationResponse,
-getJuryByIdResponse,
-createJuryResponse
+  createCommentResponse,
+  createJuryResponse,
+  createVoteResponse,
+  getCommentPaginationResponse,
+  getJuryByIdResponse,
+  getJuryPaginationResponse,
+  getMyJuryPaginationResponse,
+  patchJuryResponse,
 } from './responseSchema';
 
 @Controller('juries')

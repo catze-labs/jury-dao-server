@@ -1,17 +1,10 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
-  constructor(
-    private readonly prismaService: PrismaService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   public async register(
     walletAddress: string,

@@ -1,12 +1,13 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiResponse} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../../services/user/user.service';
 import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { RegisterUserDto } from '../dtos/registerUser.dto';
 import { getUser } from 'src/decorators/getUser.decorator';
 import { SignatureDto } from '../dtos/signature.dto';
 import { SignatureService } from '../../services/signature/signature.service';
-import {registerUserResponse, profileResponse} from './responseSchema';
+import { profileResponse, registerUserResponse } from './responseSchema';
+
 @Controller()
 @ApiTags('User')
 export class UserController {

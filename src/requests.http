@@ -112,7 +112,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZ
   "walletAddress": "0x714Ca817Ad92f9bae05DC18fA5312eB3F480cCCB",
   "defendantTitle": "defense title",
   "defendantContent": "defense content",
-  "defendantReferenceLink": ["asdasd", "nmknkjvn"]
+  "defendantReferenceLink": [
+    "asdasd",
+    "nmknkjvn"
+  ]
 }
 
 ### Add defense should return 403
