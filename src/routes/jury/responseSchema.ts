@@ -20,7 +20,7 @@ const vote = {
         updatedAt: { type: 'string', format: 'date-time' },
 	flag: {type : 'boolean'},
 	juryId : {type : 'integer'},
-	userId : {type : 'inetger'}
+	userId : {type : 'integer'}
 
 }
 
@@ -37,7 +37,7 @@ id : {type : 'integer'},
         createdAt : {type : 'string', format : 'date-time'},
         updatedAt: { type: 'string', format: 'date-time' },
 	juryId : {type : 'integer'},
-        userId : {type : 'inetger'},
+        userId : {type : 'integer'},
 	content : {type : 'string'}
 }
 export const createJuryResponse = {
