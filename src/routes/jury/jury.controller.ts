@@ -64,7 +64,13 @@ export class JuryController {
   async patchJury(
     @Param('juryId') juryId: number,
     @Body() patchJuryDto: PatchJuryDto,
+    @Body() signatureDto: SignatureDto,
   ) {
+    const { walletAddress, signature } = signatureDto;
+    const userAddress: string | undefined =
+      await this.signatureService.getAddress(walletAddress, signature);
+    this.signatureService.validateUserWalletAddress(userAddress, walletAddress);
+
     return this.juryService.patchJury(juryId, patchJuryDto);
   }
 
