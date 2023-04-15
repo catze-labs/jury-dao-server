@@ -79,7 +79,7 @@ export class JuryService {
       };
     }
 
-    return this.ps.jury.findMany({
+    const list = await this.ps.jury.findMany({
       include: {
         plaintiff: true,
         defendant: true,
@@ -88,6 +88,12 @@ export class JuryService {
       take: adjustedPagination.size,
       skip: (adjustedPagination.page - 1) * adjustedPagination.size,
     });
+
+    const count = await this.ps.jury.count({
+    where
+    })
+
+    return {list, count}
   }
 
   public async getJury(juryId: number) {
@@ -181,7 +187,14 @@ export class JuryService {
     await this.getJuryOrThrow(juryId);
     const adjustedPagination = this.adjustPagination(page, size);
 
-    return this.ps.comment.findMany({
+    const count = await this.ps.comment.count({
+
+	    where : {
+
+		    juryId
+	    }
+    })
+    const list = await this.ps.comment.findMany({
       where: {
         juryId,
       },
@@ -191,6 +204,8 @@ export class JuryService {
       take: adjustedPagination.size,
       skip: (adjustedPagination.page - 1) * adjustedPagination.size,
     });
+
+    return {count, list}
   }
 
   public async deleteComment(

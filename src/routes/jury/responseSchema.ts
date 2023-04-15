@@ -71,7 +71,13 @@ export const getJuryPaginationResponse = {
 	description : "Get Jury list",
 	schema : {
 
-		properties : {type : 'array', items: { properties : jury}}
+		properties : {
+
+			count : {type : 'integer'},
+			list : {
+				
+			type : 'array', items: { properties : jury}}
+			}
 
 	}
 
@@ -114,7 +120,13 @@ export const getCommentPaginationResponse = {
         schema : {
 
                 
-		properties : {type : 'array', items: { properties : comment}}
+		properties : {
+
+			count : {type : 'integer'},
+			list : {
+				
+			type : 'array', items: { properties : comment}}
+			}
 
         }
 
