@@ -24,7 +24,8 @@
     "db-setup": "prisma db push && prisma generate",
     "db-gen": "prisma generate",
     "db-push": "prisma db push",
-    "db-pull": "prisma db pull"
+    "db-pull": "prisma db pull",
+    "p": "prisma format | prisma db push | prisma generate"
   },
   "dependencies": {
     "@ethersproject/wallet": "^5.7.0",

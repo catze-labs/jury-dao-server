@@ -28,6 +28,7 @@ model jury {
   id                     Int      @id @default(autoincrement())
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
+  step                   Int      @default(1)
   plaintiffId            Int
   plaintiff              user     @relation("juriesAsPlantiff", fields: [plaintiffId], references: [id])
   plaintiffTitle         String
@@ -50,6 +51,7 @@ model vote {
   flag      Boolean
   juryId    Int
   jury      jury     @relation(fields: [juryId], references: [id])
+  step      Int      @default(1)
   userId    Int
   user      user     @relation(fields: [userId], references: [id])
 
