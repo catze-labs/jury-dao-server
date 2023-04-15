@@ -83,6 +83,7 @@ export class JuryService {
       include: {
         plaintiff: true,
         defendant: true,
+        votes: true,
       },
       where,
       take: adjustedPagination.size,

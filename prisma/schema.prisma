@@ -39,8 +39,8 @@ model jury {
   defendantContent       String?  @db.Text
   defendantReferenceLink Json?
 
-  vote    vote[]
-  comment comment[]
+  votes    vote[]
+  comments comment[]
 }
 
 model vote {
