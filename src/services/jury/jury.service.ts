@@ -26,7 +26,6 @@ export class JuryService {
   }
 
   public async create(createJuryDto: CreateJuryDto) {
-    // TODO: check signature
     const {
       plaintiffId,
       plaintiffTitle,
@@ -81,6 +80,9 @@ export class JuryService {
     const jury = await this.getJuryOrThrow(juryId);
     if (jury.defendantId !== userId) {
       throw new ForbiddenException("You can't patch this jury");
+    }
+    if (jury.defendantTitle !== null) {
+      throw new ForbiddenException('This jury already has been defended');
     }
 
     return this.ps.jury.update({
