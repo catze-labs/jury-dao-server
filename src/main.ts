@@ -2,21 +2,27 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { PrismaService } from './services/prisma/prisma.service';
-import {ValidationPipe} from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-  	origin : ["/^http:\/\/localhost:[0-9]{1,}/", "https://jury-dao-web.vercel.app"]
-  })
+    origin: [
+      /^http:\/\/localhost:3000$/, // Add localhost:3000 as a regex
+      /^http:\/\/localhost:[0-9]{1,}$/, // Update regex for other localhost ports
+      'https://jury-dao-web.vercel.app',
+    ],
+  });
 
-  app.useGlobalPipes(new ValidationPipe({
-	transform : true,
-	transformOptions : {
-		enableImplicitConversion : true
-	}
-
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
 
   // prisma
   const prismaService = app.get(PrismaService);
