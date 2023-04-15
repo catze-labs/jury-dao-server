@@ -7,7 +7,7 @@ const user = {
 	twitterHandle :{type : 'string',nullabel : true} 
 }
 
-export const registserUserResponse = {
+export const registerUserResponse = {
 
 	status : 201,
 	description : "Register User",
@@ -19,7 +19,7 @@ export const registserUserResponse = {
 
 export const profileResponse = {
 	status : 200,
-	description : "Get Profile of user"
+	description : "Get Profile of user",
 	schema : {
 	properties : user
 	}
