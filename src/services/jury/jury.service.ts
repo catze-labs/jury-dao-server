@@ -12,6 +12,19 @@ import { PatchJuryDto } from '../../routes/dtos/patchJury.dto';
 export class JuryService {
   constructor(private readonly ps: PrismaService) {}
 
+  private adjustPagination(page: number, size: number) {
+    if (page < 1) {
+      page = 1;
+    }
+    if (size < 1) {
+      size = 1;
+    }
+    if (size > 50) {
+      size = 50;
+    }
+    return { page, size };
+  }
+
   public async create(createJuryDto: CreateJuryDto) {
     // TODO: check signature
     const {
@@ -44,16 +57,15 @@ export class JuryService {
   }
 
   public async getJuries(page: number, size: number) {
-    if (page < 1) {
-      page = 1;
-    }
+    const adjustedPagination = this.adjustPagination(page, size);
+
     return this.ps.jury.findMany({
       include: {
         plaintiff: true,
         defendant: true,
       },
-      take: size,
-      skip: (page - 1) * size,
+      take: adjustedPagination.size,
+      skip: (adjustedPagination.page - 1) * adjustedPagination.size,
     });
   }
 
@@ -101,9 +113,7 @@ export class JuryService {
 
   public async getComments(juryId: number, page: number, size: number) {
     await this.getJuryOrThrow(juryId);
-    if (page < 1) {
-      page = 1;
-    }
+    const adjustedPagination = this.adjustPagination(page, size);
 
     return this.ps.comment.findMany({
       where: {
@@ -112,8 +122,8 @@ export class JuryService {
       include: {
         user: true,
       },
-      take: size,
-      skip: (page - 1) * size,
+      take: adjustedPagination.size,
+      skip: (adjustedPagination.page - 1) * adjustedPagination.size,
     });
   }
 

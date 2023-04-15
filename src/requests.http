@@ -92,7 +92,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZ
   "content": "This is comment"
 }
 
-
 ### Get comments
 GET http://localhost:8010/juries/1/comments?page=1&size=100
 
@@ -108,8 +107,6 @@ Content-Type: application/json
   "email": "coalsrbs7@gmail.com",
   "walletAddress": "0x0000a817Ad92f9bae05DC18fA5312eB3F4800000"
 }
-
-
 
 ### Get profile
 GET http://localhost:8010/profile
