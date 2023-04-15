@@ -5,7 +5,7 @@ import { UserService } from './user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { NonceService } from './nonce/nonce.service';
 import { SignatureService } from './signature/signature.service';
-
+import {AuthModule} from 'src/auth/auth.module';
 @Module({
   providers: [
     PrismaService,
