@@ -83,7 +83,6 @@ export class JuryService {
       include: {
         plaintiff: true,
         defendant: true,
-        votes: true,
       },
       where,
       take: adjustedPagination.size,
@@ -224,9 +223,7 @@ export class JuryService {
     }
   }
 
-  private async getJuryOrThrow(
-    juryId: number,
-  ): Promise<Table.jury & { plaintiff: Table.user; defendant: Table.user }> {
+  private async getJuryOrThrow(juryId: number) {
     const jury = await this.ps.jury.findUnique({
       where: {
         id: juryId,
@@ -234,12 +231,19 @@ export class JuryService {
       include: {
         plaintiff: true,
         defendant: true,
+        votes: true,
       },
     });
     if (jury == null) {
       throw new NotFoundException({ message: 'Jury not found' });
     }
+    let plaintiffWin = 0;
+    let defendantWin = 0;
+    jury.votes.forEach((vote) => {
+      vote.flag ? plaintiffWin++ : defendantWin++;
+    });
+    const { votes, ...remain } = jury;
 
-    return jury;
+    return { ...remain, plaintiffWin, defendantWin };
   }
 }

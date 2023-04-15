@@ -95,7 +95,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiY3JlYXRlZ
 
 
 ### Get a jury should return 200
-GET http://localhost:8010/juries/2
+GET http://localhost:8010/juries/1
 
 ### Get a jury should return 404
 GET http://localhost:8010/juries/999999
