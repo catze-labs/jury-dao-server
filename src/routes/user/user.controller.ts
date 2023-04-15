@@ -6,7 +6,7 @@ import { RegisterUserDto } from '../dtos/registerUser.dto';
 import { getUser } from 'src/decorators/getUser.decorator';
 import { SignatureDto } from '../dtos/signature.dto';
 import { SignatureService } from '../../services/signature/signature.service';
-
+import {registerUserResponse, profileResponse} from './responseSchema';
 @Controller()
 @ApiTags('User')
 export class UserController {
@@ -16,6 +16,7 @@ export class UserController {
   ) {}
 
   @Post('users')
+  @ApiResponse(regiserUserResponse)
   async register(
     @Body() registerUserDto: RegisterUserDto,
     @Body() signatureDto: SignatureDto,
@@ -31,6 +32,7 @@ export class UserController {
   }
 
   @ApiBearerAuth('accessToken')
+  @ApiResponse(profileResponse)
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async getProfile(@getUser() user: any) {
