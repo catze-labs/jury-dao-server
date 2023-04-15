@@ -157,9 +157,7 @@ export class JuryService {
         defendant: true,
       },
     });
-    console.log('Jury found');
     if (jury == null) {
-      console.log('Jury not found');
       throw new NotFoundException({ message: 'Jury not found' });
     }
 
