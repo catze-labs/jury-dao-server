@@ -56,8 +56,8 @@ export const getJuryByIdResponse = {
 	schema : {
 		properties : {
 			...jury,
-			plaintiff : user,
-			defendant : user,
+			plaintiff :{ type : 'object', properties :  user},
+			defendant : {type : 'object', propertiee : user},
 
 		}
 	}
