@@ -5,7 +5,7 @@ import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
 import { RegisterUserDto } from '../dtos/registerUser.dto';
 import { getUser } from 'src/decorators/getUser.decorator';
 import { SignatureDto } from '../dtos/signature.dto';
-import {SignatureService} from '../../services/sugnature/signature.service';
+import {SignatureService} from '../../services/signature/signature.service';
 @Controller()
 @ApiTags('User')
 export class UserController {
