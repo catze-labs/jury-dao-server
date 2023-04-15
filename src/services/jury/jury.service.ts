@@ -252,13 +252,13 @@ export class JuryService {
     if (jury == null) {
       throw new NotFoundException({ message: 'Jury not found' });
     }
-    let plaintiffWin = 0;
-    let defendantWin = 0;
+    let plaintiffVoteCount = 0;
+    let defendantVoteCount = 0;
     jury.votes.forEach((vote) => {
-      vote.flag ? plaintiffWin++ : defendantWin++;
+      vote.flag ? plaintiffVoteCount++ : defendantVoteCount++;
     });
     const { votes, ...remain } = jury;
 
-    return { ...remain, plaintiffWin, defendantWin };
+    return { ...remain, plaintiffVoteCount, defendantVoteCount };
   }
 }

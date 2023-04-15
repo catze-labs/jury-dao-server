@@ -58,6 +58,9 @@ export const getJuryByIdResponse = {
 			...jury,
 			plaintiff :{ type : 'object', properties :  user},
 			defendant : {type : 'object', properties : user},
+			votes : {type : 'array', items : vote},
+			plaintiffVoteCount : {type : 'integer'},
+			defendantVoteCount : {type : 'integer'}
 
 		}
 	}
