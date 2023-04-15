@@ -27,6 +27,7 @@ export class JuryController {
     private readonly signatureService: SignatureService,
   ) {}
 
+  @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Post('')
   async createJury(
